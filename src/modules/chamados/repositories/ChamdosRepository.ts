@@ -39,8 +39,19 @@ class ChamadosRepository {
                     }
                 },
                 tecnico_id: true,
-                data_encerramento: true,
-                created_at: true
+                created_at: true,
+                data_encerramento: true
+            }
+        })
+    }
+
+    async atendeChamado(tecnico_id: string, chamado_id: string): Promise<void> {
+        await prisma.chamado.update({
+            data: {
+                tecnico_id
+            },
+            where: {
+                id: chamado_id
             }
         })
     }

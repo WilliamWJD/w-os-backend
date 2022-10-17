@@ -19,13 +19,15 @@ class AtenderChamadoService {
         // verifica se o chamado esta aberto
         const chamado = await chamadosRepository.buscaChamadoPorId(chamado_id);
 
-        if (chamado?.data_encerramento !== null) {
-            throw new Error("Esse chamado já foi encerrado")
+        if (chamado !== null && chamado.data_encerramento !== null) {
+            throw new Error("Esse chamado ja foi encerrado");
         }
 
-        chamado.tecnico_id = tecnico_id;
+        if (chamado !== null && chamado.tecnico_id !== null) {
+            throw new Error("Esse chamado ja está em atendimento")
+        }
 
-        console.log(chamado);
+        await chamadosRepository.atendeChamado(tecnico_id, chamado_id);
     }
 }
 
