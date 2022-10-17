@@ -1,6 +1,5 @@
 export interface TecnicoDTO {
-    id?: string;
+    id: string;
     nome: string;
     email: string;
-    senha: string;
 }

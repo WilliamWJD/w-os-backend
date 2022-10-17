@@ -1,3 +1,4 @@
+import { Usuario } from "@prisma/client";
 import { BcryptHashProvider } from "../../../providers/BcryptHashProvider";
 import { UsuarioDto } from "../dtos/UsuarioDTO";
 import { UsuarioRepository } from "../repositories/UsuarioRepository";
@@ -6,7 +7,7 @@ const usuarioRepository = new UsuarioRepository();
 const bcryptHashProvider = new BcryptHashProvider();
 
 class CriarUsuarioService {
-    async execute(data: UsuarioDto): Promise<UsuarioDto> {
+    async execute(data: Usuario): Promise<UsuarioDto> {
         if (await usuarioRepository.buscaUsuarioPorEmail(data.email)) {
             throw new Error("Usuário já cadastrado com esse e-mail")
         }

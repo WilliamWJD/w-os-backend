@@ -1,10 +1,16 @@
+import { Usuario } from "@prisma/client";
 import { prisma } from "../../../database/prismaClient";
 import { UsuarioDto } from "../dtos/UsuarioDTO";
 
 class UsuarioRepository {
-    async salvarUsuario(data: UsuarioDto) {
+    async salvarUsuario(data: Usuario): Promise<UsuarioDto> {
         return await prisma.usuario.create({
-            data
+            data,
+            select: {
+                id: true,
+                nome: true,
+                email: true
+            }
         });
     }
 

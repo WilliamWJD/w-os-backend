@@ -1,10 +1,16 @@
+import { Tecnico } from "@prisma/client";
 import { prisma } from "../../../database/prismaClient";
 import { TecnicoDTO } from "../dtos/TecnicoDTO";
 
 class TecnicoRepository {
-    async salvarTecnico(data: TecnicoDTO) {
+    async salvarTecnico(data: Tecnico): Promise<TecnicoDTO> {
         return await prisma.tecnico.create({
-            data
+            data,
+            select: {
+                id: true,
+                nome: true,
+                email: true
+            }
         });
     }
 
