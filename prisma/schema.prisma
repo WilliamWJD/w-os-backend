@@ -38,11 +38,11 @@ model Chamado {
   prioridade        String
   usuario_id        String
   usuario           Usuario        @relation(fields: [usuario_id], references: [id])
-  solucao           String
-  tecnico_id        String
-  tecnico           Tecnico        @relation(fields: [tecnico_id], references: [id])
+  solucao           String?
+  tecnico_id        String?
+  tecnico           Tecnico?       @relation(fields: [tecnico_id], references: [id])
   created_at        DateTime       @default(now())
-  data_encerramento DateTime
+  data_encerramento DateTime?
   Assentamento      Assentamento[]
 
   @@map("chamados")
