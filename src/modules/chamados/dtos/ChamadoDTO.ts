@@ -9,6 +9,7 @@ export interface ChamadoDTO {
     usuario: UsuarioDto
     solucao?: string
     tecnico?: TecnicoDTO
+    tecnico_id?: string;
     created_at: Date
     data_encerramento?: Date
     Assentamento?: Assentamento[]

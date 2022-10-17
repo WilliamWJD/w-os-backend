@@ -21,6 +21,19 @@ class TecnicoRepository {
             }
         })
     }
+
+    async buscarTecnicoPorId(id: string): Promise<TecnicoDTO | null> {
+        return await prisma.tecnico.findFirst({
+            where: {
+                id
+            },
+            select: {
+                id: true,
+                nome: true,
+                email: true
+            }
+        })
+    }
 }
 
 export { TecnicoRepository }

@@ -21,6 +21,29 @@ class ChamadosRepository {
             }
         })
     }
+
+    async buscaChamadoPorId(chamado_id: string): Promise<ChamadoDTO | null> {
+        return await prisma.chamado.findFirst({
+            where: {
+                id: chamado_id
+            },
+            select: {
+                id: true,
+                descricao: true,
+                prioridade: true,
+                usuario: {
+                    select: {
+                        id: true,
+                        nome: true,
+                        email: true
+                    }
+                },
+                tecnico_id: true,
+                data_encerramento: true,
+                created_at: true
+            }
+        })
+    }
 }
 
 export { ChamadosRepository }
