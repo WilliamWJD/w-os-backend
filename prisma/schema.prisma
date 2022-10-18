@@ -16,20 +16,10 @@ model Usuario {
   email      String    @unique
   senha      String
   created_at DateTime  @default(now())
+  perfil     String    @default(dbgenerated("USER"))
   Chamado    Chamado[]
 
   @@map("usuarios")
-}
-
-model Tecnico {
-  id         String    @id @default(uuid())
-  nome       String
-  email      String    @unique
-  senha      String
-  created_at DateTime  @default(now())
-  Chamado    Chamado[]
-
-  @@map("tecnicos")
 }
 
 model Chamado {
@@ -40,7 +30,7 @@ model Chamado {
   usuario           Usuario        @relation(fields: [usuario_id], references: [id])
   solucao           String?
   tecnico_id        String?
-  tecnico           Tecnico?       @relation(fields: [tecnico_id], references: [id])
+  tecnico           Usuario?       @relation(fields: [tecnico_id], references: [id])
   created_at        DateTime       @default(now())
   data_encerramento DateTime?
   Assentamento      Assentamento[]

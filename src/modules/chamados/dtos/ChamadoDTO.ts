@@ -1,5 +1,4 @@
 import { Assentamento } from "@prisma/client"
-import { TecnicoDTO } from "../../tecnico/dtos/TecnicoDTO"
 import { UsuarioDto } from "../../usuario/dtos/UsuarioDTO"
 
 export interface ChamadoDTO {
