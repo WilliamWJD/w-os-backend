@@ -1,24 +1,14 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "usuarios" (
+    "id" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "senha" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "perfil" TEXT NOT NULL DEFAULT USER,
 
-  - You are about to drop the `Assentamento` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Chamado` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Assentamento" DROP CONSTRAINT "Assentamento_chamado_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Chamado" DROP CONSTRAINT "Chamado_tecnico_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Chamado" DROP CONSTRAINT "Chamado_usuario_id_fkey";
-
--- DropTable
-DROP TABLE "Assentamento";
-
--- DropTable
-DROP TABLE "Chamado";
+    CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "chamados" (
@@ -26,10 +16,10 @@ CREATE TABLE "chamados" (
     "descricao" TEXT NOT NULL,
     "prioridade" TEXT NOT NULL,
     "usuario_id" TEXT NOT NULL,
-    "solucao" TEXT NOT NULL,
-    "tecnico_id" TEXT NOT NULL,
+    "solucao" TEXT,
+    "tecnico_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "data_encerramento" TIMESTAMP(3) NOT NULL,
+    "data_encerramento" TIMESTAMP(3),
 
     CONSTRAINT "chamados_pkey" PRIMARY KEY ("id")
 );
@@ -44,11 +34,14 @@ CREATE TABLE "assentamentos" (
     CONSTRAINT "assentamentos_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateIndex
+CREATE UNIQUE INDEX "usuarios_email_key" ON "usuarios"("email");
+
 -- AddForeignKey
 ALTER TABLE "chamados" ADD CONSTRAINT "chamados_usuario_id_fkey" FOREIGN KEY ("usuario_id") REFERENCES "usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "chamados" ADD CONSTRAINT "chamados_tecnico_id_fkey" FOREIGN KEY ("tecnico_id") REFERENCES "tecnicos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "chamados" ADD CONSTRAINT "chamados_tecnico_id_fkey" FOREIGN KEY ("tecnico_id") REFERENCES "usuarios"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "assentamentos" ADD CONSTRAINT "assentamentos_chamado_id_fkey" FOREIGN KEY ("chamado_id") REFERENCES "chamados"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

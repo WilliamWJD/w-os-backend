@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Usuario {
-  id         String    @id @default(uuid())
-  nome       String
-  email      String    @unique
-  senha      String
-  created_at DateTime  @default(now())
-  perfil     String    @default(dbgenerated("USER"))
-  Chamado    Chamado[]
+  id                String    @id @default(uuid())
+  nome              String
+  email             String    @unique
+  senha             String
+  created_at        DateTime  @default(now())
+  perfil            Role      @default(USER)
+  Chamado           Chamado[] @relation("usuario")
+  ChamadoEncerrados Chamado[] @relation("tecnico")
 
   @@map("usuarios")
 }
@@ -27,10 +28,10 @@ model Chamado {
   descricao         String
   prioridade        String
   usuario_id        String
-  usuario           Usuario        @relation(fields: [usuario_id], references: [id])
+  usuario           Usuario        @relation("usuario", fields: [usuario_id], references: [id])
   solucao           String?
   tecnico_id        String?
-  tecnico           Usuario?       @relation(fields: [tecnico_id], references: [id])
+  tecnico           Usuario?       @relation("tecnico", fields: [tecnico_id], references: [id])
   created_at        DateTime       @default(now())
   data_encerramento DateTime?
   Assentamento      Assentamento[]
@@ -46,4 +47,9 @@ model Assentamento {
   created_at DateTime @default(now())
 
   @@map("assentamentos")
+}
+
+enum Role {
+  USER
+  TECNICO
 }
