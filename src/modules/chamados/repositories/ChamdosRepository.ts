@@ -45,10 +45,10 @@ class ChamadosRepository {
         })
     }
 
-    async atendeChamado(tecnico_id: string, chamado_id: string): Promise<void> {
+    async atendeChamado(usuario_id: string, chamado_id: string): Promise<void> {
         await prisma.chamado.update({
             data: {
-                tecnico_id
+                tecnico_id: usuario_id
             },
             where: {
                 id: chamado_id
