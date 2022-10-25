@@ -14,10 +14,16 @@ class UsuarioRepository {
         });
     }
 
-    async buscaUsuarioPorEmail(email: string) {
+    async buscaUsuarioPorEmail(email: string): Promise<UsuarioDto | null> {
         return await prisma.usuario.findUnique({
             where: {
                 email
+            },
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                senha: true
             }
         })
     }
